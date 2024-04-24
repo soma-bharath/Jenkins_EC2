@@ -1,5 +1,5 @@
 resource "aws_security_group" "alb_sg" {
-  name        = "alb_sg"
+  name        = "alb-sg"
   description = "Security group for the ALB"
   vpc_id      = data.aws_vpc.main_vpc.id
 
@@ -36,7 +36,7 @@ resource "aws_security_group" "alb_sg" {
 
 
 resource "aws_security_group" "ec2_sg" {
-  name        = "ec2_sg"
+  name        = "ec2-sg"
   description = "Security group for the ec2"
   vpc_id      = data.aws_vpc.main_vpc.id
 
