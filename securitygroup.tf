@@ -54,7 +54,7 @@ resource "aws_security_group_rule" "allow_443" {
   security_group_id = aws_security_group.ec2_sg.id    
   source_security_group_id = aws_security_group.alb_sg.id
   from_port         = 443
-  ip_protocol       = "tcp"
+  protocol       = "tcp"
   to_port           = 443
 }
 resource "aws_security_group_rule" "allow_80" {
@@ -62,7 +62,7 @@ resource "aws_security_group_rule" "allow_80" {
   security_group_id = aws_security_group.ec2_sg.id
   source_security_group_id = aws_security_group.alb_sg.id
   from_port         = 80
-  ip_protocol       = "tcp"
+  protocol       = "tcp"
   to_port           = 80
 }
 resource "aws_security_group_rule" "allow_8080" {
@@ -70,6 +70,6 @@ resource "aws_security_group_rule" "allow_8080" {
   security_group_id = aws_security_group.ec2_sg.id
   source_security_group_id = aws_security_group.alb_sg.id
   from_port         = 8080
-  ip_protocol       = "tcp"
+  protocol       = "tcp"
   to_port           = 8080
 }
