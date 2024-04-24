@@ -22,10 +22,6 @@ data "aws_subnet" "private_subnets" {
   id       = each.value
 }
 
-data "aws_security_group" "jenkins-Security-Group" {
-  name = "jenkins-ec2-sg"
-}
-
 data "aws_subnets" "public" {
   filter {
     name   = "vpc-id"
