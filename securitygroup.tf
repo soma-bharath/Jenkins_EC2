@@ -73,3 +73,12 @@ resource "aws_security_group_rule" "allow_8080" {
   protocol       = "tcp"
   to_port           = 8080
 }
+
+resource "aws_security_group_rule" "allow_22" {
+  type   = "ingress"
+  security_group_id = aws_security_group.ec2_sg.id
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port         = 8080
+  protocol       = "tcp"
+  to_port           = 8080
+}
