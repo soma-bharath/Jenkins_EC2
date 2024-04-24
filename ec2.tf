@@ -42,7 +42,7 @@ sudo yum update -y
 sudo yum install java-11-openjdk java-11-openjdk-devel -y
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
-sudo mkfs.ext4 /dev/xvdf
+sudo mkfs -t xfs /dev/xvdf
 sudo mkdir /apps
 sudo mount /dev/xvdf /apps
 sudo yum install jenkins -y
