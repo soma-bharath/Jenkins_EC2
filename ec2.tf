@@ -58,4 +58,5 @@ EOF
     Date = local.current_date
     Env  = var.env
   }
+depends_on = [aws_security_group.ec2_sg]
 }
