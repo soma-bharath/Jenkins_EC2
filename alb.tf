@@ -10,6 +10,7 @@ resource "aws_lb" "Jenkins_Alb" {
     Date = local.current_date
     Env  = var.env
   }
+depends_on = [aws_instance.my_ec2]
 }
 
 resource "aws_lb_target_group" "Jenkins_target_group" {
@@ -23,6 +24,7 @@ resource "aws_lb_target_group" "Jenkins_target_group" {
     Date = local.current_date
     Env  = var.env
   }
+depends_on = [aws_instance.my_ec2,aws_lb.Jenkins_Alb]
 }
 
 resource "aws_lb_listener" "jenkins_listener" {
@@ -34,4 +36,5 @@ resource "aws_lb_listener" "jenkins_listener" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.Jenkins_target_group.arn
   }
+depends_on = [aws_lb_target_group.Jenkins_target_group]
 }
