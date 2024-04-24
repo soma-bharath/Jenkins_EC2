@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "Jenkins_target_group" {
   name        = "Jenkins-target-group"
   port        = 8080
   protocol    = "HTTP"
-  target_type = aws_instance.my_ec2.id
+  target_type = "instance"
   vpc_id      =  data.aws_vpc.main_vpc.id
   tags = {
     Name = "Jenkins-target-group"
@@ -37,4 +37,9 @@ resource "aws_lb_listener" "jenkins_listener" {
     target_group_arn = aws_lb_target_group.Jenkins_target_group.arn
   }
 depends_on = [aws_lb_target_group.Jenkins_target_group]
+}
+
+resource "aws_lb_target_group_attachment" "example_attachment" {
+  target_group_arn = aws_lb_target_group.Jenkins_target_group.arn
+  target_id        = aws_instance.my_ec2.id
 }
