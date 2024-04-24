@@ -21,7 +21,7 @@ root_block_device {
     volume_type           = "gp2"
     volume_size           = 30
     encrypted             = true
-    kms_key_id            = data.aws_kms_key.my_key.arn  # Specify your KMS key ID
+    #kms_key_id            = data.aws_kms_key.my_key.arn  # Specify your KMS key ID
     delete_on_termination = true
   }
 
@@ -31,7 +31,7 @@ root_block_device {
     volume_type           = "gp2"
     volume_size           = 100
     encrypted             = true
-    kms_key_id            = data.aws_kms_key.my_key.arn  # Specify your KMS key ID
+    #kms_key_id            = data.aws_kms_key.my_key.arn  # Specify your KMS key ID
     delete_on_termination = true
   }
 
