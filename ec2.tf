@@ -37,17 +37,21 @@ root_block_device {
 
   user_data = <<EOF
 #!/bin/bash
-set -x
-sudo yum update -y
-sudo yum install java-11-openjdk java-11-openjdk-devel -y
+set -xe
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
-sudo mkfs -t xfs /dev/xvdf
-sudo mkdir /apps
-sudo mount /dev/xvdf /apps
+sudo yum upgrade -y
+sudo yum install java-11-openjdk java-11-openjdk-devel -y
 sudo yum install jenkins -y
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
+sudo yum install firewalld -y
+sudo systemctl start firewalld
+sudo systemctl enable firewalld
+sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
+sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+echo "$password"
 EOF
   tags = {
     Name = "Jenkins-EC2"
