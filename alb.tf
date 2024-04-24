@@ -1,12 +1,12 @@
 
 resource "aws_lb" "Jenkins_Alb" {
-  name               = "Jenkins_Alb"
+  name               = "Jenkins-Alb"
   internal           = false
   load_balancer_type = "application"
   subnets            = [for j in data.aws_subnet.public_subnets : j.id]
   security_groups    = [aws_security_group.alb_sg.id]
   tags = {
-    Name = "Jenkins_Alb"
+    Name = "Jenkins-Alb"
     Date = local.current_date
     Env  = var.env
   }
@@ -14,13 +14,13 @@ depends_on = [aws_instance.my_ec2]
 }
 
 resource "aws_lb_target_group" "Jenkins_target_group" {
-  name        = "Jenkins_target_group"
+  name        = "Jenkins-target-group"
   port        = 8080
   protocol    = "HTTP"
   target_type = aws_instance.my_ec2.id
   vpc_id      =  data.aws_vpc.main_vpc.id
   tags = {
-    Name = "Jenkins_target_group"
+    Name = "Jenkins-target-group"
     Date = local.current_date
     Env  = var.env
   }
