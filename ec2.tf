@@ -1,11 +1,9 @@
 resource "aws_instance" "my_ec2" {
-  instance_type               = "t2.micro"
+  instance_type               = "t2.large"
   ami                         = "ami-04fd4a41214d8887d" #CIS AMI ID in us-west-2 region
   subnet_id                   = data.aws_subnet.private_subnet_1.id
   vpc_security_group_ids      = [data.aws_security_group.jenkins-Security-Group.id]
   key_name                    = aws_key_pair.jenkins_key_pair.key_name
-  associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.EKS-EC2.name
   connection {
     type        = "ssh"
     user        = "ec2-user"
@@ -23,11 +21,12 @@ resource "aws_instance" "my_ec2" {
 #!/bin/bash
 set -x
 sudo yum update -y
-sudo yum install java-1.8.0-openjdk-devel -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum install java-11-openjdk java-11-openjdk-devel -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 sudo yum install jenkins -y
 sudo systemctl start jenkins
+sudo systemctl enable jenkins
 EOF
   tags = {
     Name = "Jenkins-EC2"
