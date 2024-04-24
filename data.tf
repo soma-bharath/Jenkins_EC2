@@ -48,6 +48,17 @@ data "aws_subnet" "public_subnet_1" {
   }
 }
 
+data "aws_subnet" "private_subnet_1" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.main_vpc.id]
+  }
+  filter {
+    name   = "tag:Name"
+    values = ["private_subnet_1"]
+  }
+}
+
 data "aws_subnet" "public_subnets" {
   for_each = toset(data.aws_subnets.public.ids)
   id       = each.value
