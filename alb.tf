@@ -24,6 +24,17 @@ resource "aws_lb_target_group" "Jenkins_target_group" {
     Date = local.current_date
     Env  = var.env
   }
+  health_check {
+    enabled             = true
+    interval            = 30  # Interval between health checks (in seconds)
+    timeout             = 5   # Timeout for each health check (in seconds)
+    healthy_threshold   = 2   # Number of consecutive successful health checks to mark target as healthy
+    unhealthy_threshold = 2   # Number of consecutive failed health checks to mark target as unhealthy
+    path                = "/" # Endpoint path for health check
+    port                = "traffic-port"  # Port to perform health check
+    protocol            = "HTTP" # Protocol for health check
+    matcher             = "403"
+  }
 depends_on = [aws_instance.my_ec2,aws_lb.Jenkins_Alb]
 }
 
