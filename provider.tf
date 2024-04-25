@@ -15,7 +15,7 @@ provider "aws" {
 locals {
   current_date = formatdate("YYYY-MM-DD", timestamp())
 }
-
+/*
 resource "null_resource" "fetch_jenkins_password" {
   depends_on = [aws_instance.my_ec2]
 
@@ -37,3 +37,4 @@ output "jenkins_initial_password" {
   value     = null_resource.fetch_jenkins_password.triggers
   sensitive = true
 }
+*/
