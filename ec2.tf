@@ -4,7 +4,7 @@ resource "aws_instance" "my_ec2" {
   subnet_id                   = data.aws_subnet.private_subnet_1.id
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
   key_name                    = aws_key_pair.jenkins_key_pair.key_name
-  iam_instance_profile        = aws_iam_instance_profile.EKS-EC2.name
+  iam_instance_profile        = aws_iam_instance_profile.EC2_Jenkins.name
   connection {
     type        = "ssh"
     user        = "ec2-user"
