@@ -4,6 +4,7 @@ resource "aws_instance" "my_ec2" {
   subnet_id                   = data.aws_subnet.private_subnet_1.id
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
   key_name                    = aws_key_pair.jenkins_key_pair.key_name
+  iam_instance_profile        = aws_iam_instance_profile.EKS-EC2.name
   connection {
     type        = "ssh"
     user        = "ec2-user"
@@ -42,6 +43,9 @@ sudo yum install wget -y
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 sudo yum upgrade -y
+sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+sudo systemctl start amazon-ssm-agent
+sudo systemctl enable amazon-ssm-agent
 sudo yum install java-11-openjdk java-11-openjdk-devel -y
 sudo yum install jenkins -y
 sudo systemctl start jenkins
