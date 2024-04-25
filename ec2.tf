@@ -38,6 +38,7 @@ root_block_device {
   user_data = <<EOF
 #!/bin/bash
 set -xe
+sudo yum install wget -y
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
 sudo yum upgrade -y
@@ -50,6 +51,7 @@ sudo systemctl start firewalld
 sudo systemctl enable firewalld
 sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+sudo systemctl restart firewalld
 password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 echo "$password"
 EOF
