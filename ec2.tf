@@ -64,5 +64,5 @@ EOF
     Date = local.current_date
     Env  = var.env
   }
-depends_on = [aws_security_group.ec2_sg]
+depends_on = [aws_security_group.ec2_sg,aws_iam_role.Amazon_EC2_Jenkins]
 }
