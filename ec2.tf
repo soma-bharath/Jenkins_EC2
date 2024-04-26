@@ -42,7 +42,7 @@ set -xe
 sudo mkfs -t ext4 /dev/xvdf
 sudo mkdir /apps
 sudo mount /dev/xvdf /apps
-sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> /etc/fstab
+sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> sudo /etc/fstab
 sudo yum install wget -y
 sudo wget -O /etc/yum.repos.d/jenkins.repo https://downloads.cloudbees.com/cje/rolling/rpm/jenkins.repo
 sudo rpm --import https://downloads.cloudbees.com/jenkins-enterprise/rolling/rpm/cloudbees.com.key
