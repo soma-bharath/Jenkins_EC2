@@ -39,15 +39,21 @@ root_block_device {
   user_data = <<EOF
 #!/bin/bash
 set -xe
+sudo mkfs -t ext4 /dev/xvdf
+sudo mkdir /apps
+sudo mount /dev/xvdf /apps
+sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> /etc/fstab
 sudo yum install wget -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat/jenkins.io-2023.key
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://downloads.cloudbees.com/cje/rolling/rpm/jenkins.repo
+sudo rpm --import https://downloads.cloudbees.com/jenkins-enterprise/rolling/rpm/cloudbees.com.key
 sudo yum upgrade -y
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
 sudo systemctl start amazon-ssm-agent
 sudo systemctl enable amazon-ssm-agent
 sudo yum install java-11-openjdk java-11-openjdk-devel -y
-sudo yum install jenkins -y
+sudo yum install jenkins -y --nobest
+sudo systemctl stop jenkins
+sudo mv /var/lib/jenkins/* /apps
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 sudo yum install firewalld -y
