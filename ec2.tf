@@ -1,5 +1,5 @@
 resource "aws_instance" "my_ec2" {
-  instance_type               = "t2.large"
+  instance_type               = "t2.medium"
   ami                         = "ami-0663b059c6536cac8" #CIS AMI ID in us-west-2 region
   subnet_id                   = data.aws_subnet.private_subnet_1.id
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
