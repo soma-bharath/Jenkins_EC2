@@ -50,10 +50,9 @@ sudo yum upgrade -y
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
 sudo systemctl start amazon-ssm-agent
 sudo systemctl enable amazon-ssm-agent
-sudo yum install java-11-openjdk java-11-openjdk-devel -y
-sudo yum install jenkins -y --nobest
-sudo systemctl stop jenkins
-sudo mv /var/lib/jenkins/* /apps
+sudo yum install java-17-amazon-corretto-devel -y #sudo yum install java-11-openjdk java-11-openjdk-devel -y
+sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
+sudo yum install jenkins-2.346.4.1-1.1.noarch.rpm -y
 sudo systemctl start jenkins
 sudo systemctl enable jenkins
 sudo yum install firewalld -y
@@ -63,6 +62,7 @@ sudo systemctl enable firewalld
 sleep 10
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 sudo systemctl restart firewalld
+sleep 10
 password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
 echo "$password"
 EOF
