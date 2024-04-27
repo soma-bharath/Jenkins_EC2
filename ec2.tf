@@ -54,6 +54,13 @@ sudo yum install java-17-amazon-corretto-devel -y #sudo yum install java-11-open
 sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
 sudo yum install jenkins-2.346.4.1-1.1.noarch.rpm -y
 sudo systemctl start jenkins
+sudo chmod 777 -R /apps/
+sudo systemctl stop jenkins
+sleep 5
+sudo sed -i 's#^JENKINS_HOME=.*#JENKINS_HOME="/apps/"#' /etc/sysconfig/jenkins
+sleep 5
+sudo systemctl start jenkins
+sleep 5
 sudo systemctl enable jenkins
 sudo yum install firewalld -y
 sudo systemctl start firewalld
