@@ -70,7 +70,7 @@ sleep 10
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 sudo systemctl restart firewalld
 sleep 10
-password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+password=$(sudo cat /apps/secrets/initialAdminPassword)
 echo "$password"
 EOF
   tags = {
