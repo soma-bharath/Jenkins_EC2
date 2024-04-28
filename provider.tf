@@ -22,7 +22,7 @@ provisioner "local-exec" {
     command = <<EOT
       sudo chmod 700 jenkins-key.pem && \
       sleep 20 && \
-      sudo ssh -i "${path.module}/jenkins-key.pem" ec2-user@${aws_instance.my_ec2.private_ip} "sudo cat /apps/secrets/initialAdminPassword"
+      sudo ssh -o StrictHostKeyChecking=no -i "${path.module}/jenkins-key.pem" ec2-user@${aws_instance.my_ec2.private_ip} "sudo cat /apps/secrets/initialAdminPassword"
       
     EOT
   }   
