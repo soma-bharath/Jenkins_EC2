@@ -65,12 +65,12 @@ sleep 5
 sudo systemctl enable jenkins
 sudo yum install firewalld -y
 sudo systemctl start firewalld
-sleep 10
+sleep 20
 sudo systemctl enable firewalld
-sleep 10
+sleep 20
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 sudo systemctl restart firewalld
-sleep 10
+sleep 20
 password=$(sudo cat /apps/secrets/initialAdminPassword)
 echo "$password"
 EOF
