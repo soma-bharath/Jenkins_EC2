@@ -63,11 +63,13 @@ sleep 5
 sudo systemctl start jenkins
 sleep 5
 sudo systemctl enable jenkins
+sleep 20
 sudo yum install firewalld -y
+sleep 20
 sudo systemctl start firewalld
-sleep 20
+sleep 40
 sudo systemctl enable firewalld
-sleep 20
+sleep 40
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 sleep 20
 sudo systemctl restart firewalld
