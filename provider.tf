@@ -20,7 +20,7 @@ resource "null_resource" "fetch_jenkins_password" {
   depends_on = [aws_instance.my_ec2,aws_lb.Jenkins_Alb]
 provisioner "local-exec" {
     command = <<EOT
-      sudo chomd 700 jenkins-key.pem && \
+      sudo chmod 700 jenkins-key.pem && \
       sleep 20 && \
       sudo ssh -i "${path.module}/jenkins-key.pem" ec2-user@${aws_instance.my_ec2.private_ip} "sudo cat /apps/secrets/initialAdminPassword"
       
