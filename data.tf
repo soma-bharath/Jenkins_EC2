@@ -28,8 +28,8 @@ data "aws_subnets" "public" {
     values = [data.aws_vpc.main_vpc.id]
   }
   filter {
-    name   = "tag:Subnet-Type"
-    values = ["public"]
+    name   = "map-public-ip-on-launch"
+    values = ["*public-subnet"]
   }
 }
 
