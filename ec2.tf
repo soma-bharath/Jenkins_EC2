@@ -59,7 +59,7 @@ sudo update-alternatives --install /usr/bin/jar jar /opt/jdk-17.0.11/bin/jar 1
 sudo cd
 sudo yum install daemonize -y
 sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y --nogpgcheck
 sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
 sudo rpm -ivh --nodigest --nofiledigest jenkins-2.346.4.1-1.1.noarch.rpm
 sudo systemctl start jenkins
