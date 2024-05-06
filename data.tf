@@ -29,7 +29,7 @@ data "aws_subnets" "public" {
   }
   filter {
     name   = "map-public-ip-on-launch"
-    values = ["*public-subnet"]
+    values = ["true"]
   }
 }
 
