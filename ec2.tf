@@ -62,7 +62,6 @@ sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noa
 sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
 sudo yum install daemonize -y
 sudo rpm -ivh --nodigest --nofiledigest jenkins-2.346.4.1-1.1.noarch.rpm
-sudo systemctl start jenkins
 sudo chmod 777 -R /apps/
 sudo sed -i 's/User=jenkins/User=root/g' /usr/lib/systemd/system/jenkins.service
 sudo systemctl daemon-reload
