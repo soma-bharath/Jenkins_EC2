@@ -56,7 +56,7 @@ sudo tar xvf jdk-17_linux-x64_bin.tar.gz
 sudo chown -R root: jdk-17.0.11
 sudo update-alternatives --install /usr/bin/java java /opt/jdk-17.0.11/bin/java 1
 sudo update-alternatives --install /usr/bin/jar jar /opt/jdk-17.0.11/bin/jar 1
-cd 
+sudo cd /home/ec2-user
 sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
 sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y --nogpgcheck
 sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
