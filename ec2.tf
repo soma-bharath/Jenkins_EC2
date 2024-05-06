@@ -36,7 +36,8 @@ root_block_device {
     delete_on_termination = true
   }
 
-  user_data = <<EOF#!/bin/bash
+  user_data = <<EOF
+#!/bin/bash
 set -xe
 sudo mkfs -t ext4 /dev/xvdf
 sudo mkdir /apps
