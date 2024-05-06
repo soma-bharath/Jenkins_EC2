@@ -40,7 +40,7 @@ root_block_device {
 #!/bin/bash
 set -xe
 sudo mkfs -t ext4 /dev/xvdf
-sudo mkdir /apps
+mkdir /apps
 sudo mount /dev/xvdf /apps
 sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> sudo /etc/fstab
 sudo yum install wget -y
@@ -60,6 +60,7 @@ cd
 sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
 sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y --nogpgcheck
 sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
+sudo yum install java-11-openjdk-devel -y
 sudo yum install daemonize -y
 sudo rpm -ivh --nodigest --nofiledigest jenkins-2.346.4.1-1.1.noarch.rpm
 sudo chmod 777 -R /apps/
