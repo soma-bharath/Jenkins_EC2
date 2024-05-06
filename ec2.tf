@@ -40,7 +40,7 @@ root_block_device {
 #!/bin/bash
 set -xe
 sudo mkfs -t ext4 /dev/xvdf
-mkdir /apps
+sudo mkdir /apps
 sudo mount /dev/xvdf /apps
 sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> sudo /etc/fstab
 sudo yum install wget -y
