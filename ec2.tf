@@ -79,6 +79,10 @@ sleep 20
 sudo systemctl start firewalld
 sleep 40
 sudo systemctl enable firewalld
+sleep 10
+sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+sleep 10
+sudo systemctl restart firewalld
 password=$(sudo cat /apps/secrets/initialAdminPassword)
 echo "$password"
 EOF
