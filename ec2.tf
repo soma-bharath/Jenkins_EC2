@@ -50,13 +50,13 @@ sudo yum upgrade -y
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm --nogpgcheck
 sudo systemctl start amazon-ssm-agent
 sudo systemctl enable amazon-ssm-agent
-sudo cd /opt
+cd /opt
 sudo wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
 sudo tar xvf jdk-17_linux-x64_bin.tar.gz
 sudo chown -R root: jdk-17.0.11
 sudo update-alternatives --install /usr/bin/java java /opt/jdk-17.0.11/bin/java 1
 sudo update-alternatives --install /usr/bin/jar jar /opt/jdk-17.0.11/bin/jar 1
-sudo cd
+cd 
 sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
 sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y --nogpgcheck
 sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
