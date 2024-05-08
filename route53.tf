@@ -1,10 +1,10 @@
 resource "aws_route53_zone" "jenkins_zone" {
-  name = "dev." # Update with your desired domain name
+  name = "dev.nn" # Update with your desired domain name
 }
 
 resource "aws_route53_record" "jenkins_record" {
   zone_id = aws_route53_zone.jenkins_zone.zone_id
-  name    = "dev."  # Update with your desired domain name
+  name    = "dev.nn"  # Update with your desired domain name
   type    = "A"
   ttl     = "300"
 
