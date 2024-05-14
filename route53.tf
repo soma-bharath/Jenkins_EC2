@@ -9,5 +9,5 @@ resource "aws_route53_record" "jenkins_record" {
     zone_id                = data.aws_route53_zone.hosted_zone.zone_id
     evaluate_target_health = false
   }
-depends_on=[aws_route53_zone.jenkins_zone]
+depends_on=[aws_lb.Jenkins_Alb]
 }
