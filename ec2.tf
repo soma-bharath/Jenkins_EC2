@@ -39,40 +39,25 @@ root_block_device {
   user_data = <<EOF
 #!/bin/bash
 set -xe
-sudo mkfs -t ext4 /dev/xvdf
+sudo mkfs -t ext4 /dev/nvme1n1
 sudo mkdir /apps
-sudo mount /dev/xvdf /apps
-sudo echo "/dev/xvdf /apps ext4 defaults,nofail 0 2" >> sudo /etc/fstab
-sudo yum install wget -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo https://downloads.cloudbees.com/cje/rolling/rpm/jenkins.repo
-sudo rpm --import https://downloads.cloudbees.com/jenkins-enterprise/rolling/rpm/cloudbees.com.key
+sudo mount /dev/nvme1n1 /apps
+sudo echo "/dev/nvme1n1 /apps ext4 defaults,nofail 0 2" >> sudo /etc/fstab
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 sudo yum upgrade -y
 sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm --nogpgcheck
 sudo systemctl start amazon-ssm-agent
 sudo systemctl enable amazon-ssm-agent
-cd /opt
-sudo wget https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz
-sudo tar xvf jdk-17_linux-x64_bin.tar.gz
-sudo chown -R root: jdk-17.0.11
-sudo update-alternatives --install /usr/bin/java java /opt/jdk-17.0.11/bin/java 1
-sudo update-alternatives --install /usr/bin/jar jar /opt/jdk-17.0.11/bin/jar 1
-cd /home/ec2-user
-sudo wget https://jenkins-downloads.cloudbees.com/cje/rolling/rpm/RPMS/noarch/jenkins-2.346.4.1-1.1.noarch.rpm
-sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm -y --nogpgcheck
-sudo chmod 777 jenkins-2.346.4.1-1.1.noarch.rpm
-sudo yum install java-11-openjdk-devel -y
-sudo yum install daemonize -y
-sudo rpm -ivh --nodigest --nofiledigest jenkins-2.346.4.1-1.1.noarch.rpm
+sudo yum install -y java-17-openjdk-devel
+sudo yum install jenkins -y
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
 sudo chmod 777 -R /apps/
-sudo sed -i 's/User=jenkins/User=root/g' /usr/lib/systemd/system/jenkins.service
+sudo systemctl stop jenkins
+sudo sed -i 's|/var/lib/jenkins|/apps|g' /lib/systemd/system/jenkins.service
 sudo systemctl daemon-reload
 sudo systemctl restart jenkins
-sudo systemctl stop jenkins
-sleep 5
-sudo sed -i 's#^JENKINS_HOME=.*#JENKINS_HOME="/apps/"#' /etc/sysconfig/jenkins
-sleep 5
-sudo systemctl start jenkins
-sleep 5
 sudo systemctl enable jenkins
 sleep 20
 sudo yum install firewalld -y
@@ -84,8 +69,11 @@ sleep 10
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
 sleep 10
 sudo systemctl restart firewalld
+sudo hostnamectl set-hostname jenkins
+sleep 5
 password=$(sudo cat /apps/secrets/initialAdminPassword)
 echo "$password"
+sudo reboot
 EOF
   tags = {
     Name = "Jenkins-EC2"
