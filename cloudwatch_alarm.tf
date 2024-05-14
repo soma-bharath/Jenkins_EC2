@@ -12,4 +12,10 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
   dimensions = {
     InstanceId = aws_instance.my_ec2.id
   }
+  tags = {
+    Name = "Jenkins-EC2"
+    Date = local.current_date
+    Env  = var.env
+  }
+depends_on=[aws_instance.my_ec2]
 }
