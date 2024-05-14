@@ -59,6 +59,11 @@ data "aws_subnet" "public_subnets" {
   for_each = toset(data.aws_subnets.public.ids)
   id       = each.value
 }
+
+data "aws_route53_zone" "hosted_zone" {
+  name = "devgov.ciscospaces.io" # Replace with your hosted zone name
+}
+
 /*
 data "aws_kms_key" "my_key" {
   key_id = "arn:aws:kms:region:account-id:key/key-id" #enter your existing kms key id
