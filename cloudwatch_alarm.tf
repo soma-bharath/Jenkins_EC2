@@ -7,9 +7,9 @@ resource "aws_cloudwatch_metric_alarm" "cpu_alarm" {
   period              = "300"
   statistic           = "Average"
   threshold           = "80" # Set your desired threshold
-  alarm_description   = "This metric monitors EC2 CPU utilization"
+  alarm_description   = "This metric monitors EC2 CPU utilization of Jenkins machine"
 
   dimensions = {
-    InstanceId = aws_instance.example.id
+    InstanceId = aws_instance.my_ec2.id
   }
 }
