@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Variables
 S3_BUCKET="my-jenkins-backup-bucket"
 BACKUP_PATH="/apps"
 TIMESTAMP=$(date +"%Y%m%d%H%M%S")
