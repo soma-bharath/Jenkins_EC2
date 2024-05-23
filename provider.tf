@@ -34,7 +34,7 @@ resource "null_resource" "setup_backup" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("~/.ssh/id_rsa")
+      private_key = tls_private_key.keypair.private_key_pem
       host        = aws_instance.my_ec2.private_ip
     }
   }
@@ -49,7 +49,7 @@ resource "null_resource" "setup_backup" {
     connection {
       type        = "ssh"
       user        = "ec2-user"
-      private_key = file("~/.ssh/id_rsa")
+      private_key = tls_private_key.keypair.private_key_pem
       host        = aws_instance.my_ec2.private_ip
     }
   }
