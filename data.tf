@@ -64,6 +64,13 @@ data "aws_route53_zone" "hosted_zone" {
   name = "devgov.ciscospaces.io" # Replace with your hosted zone name
 }
 
+data "aws_route_tables" "private" {
+  filter {
+    name   = "tag:Name"
+    values = ["Private Route Table"]
+  }
+}
+
 /*
 data "aws_kms_key" "my_key" {
   key_id = "arn:aws:kms:region:account-id:key/key-id" #enter your existing kms key id
