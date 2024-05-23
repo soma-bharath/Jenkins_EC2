@@ -26,3 +26,33 @@ provisioner "local-exec" {
     EOT
   }   
 }
+
+resource "null_resource" "setup_backup" {
+  provisioner "file" {
+    source      = "jenkinsbackup.sh"
+    destination = "/tmp/jenkinsbackup.sh"
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file("~/.ssh/id_rsa")
+      host        = aws_instance.my_ec2.private_ip
+    }
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo mv /tmp/jenkinsbackup.sh /usr/local/bin/jenkinsbackup.sh",
+      "sudo chmod +x /usr/local/bin/jenkinsbackup.sh",
+      "echo '0 2 * * * /usr/local/bin/jenkinsbackup.sh' | sudo tee -a /etc/crontab > /dev/null"
+    ]
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = file("~/.ssh/id_rsa")
+      host        = aws_instance.my_ec2.private_ip
+    }
+  }
+
+  depends_on = [aws_instance.my_ec2]
+}
