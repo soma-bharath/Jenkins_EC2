@@ -5,12 +5,7 @@ resource "aws_instance" "my_ec2" {
   vpc_security_group_ids      = [aws_security_group.ec2_sg.id]
   key_name                    = aws_key_pair.jenkins_key_pair.key_name
   iam_instance_profile        = aws_iam_instance_profile.EC2_Jenkins.name
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = tls_private_key.keypair.private_key_pem
-    host        = aws_instance.my_ec2.public_ip
-  }
+
   
 /*
   provisioner "file" {
@@ -18,6 +13,30 @@ resource "aws_instance" "my_ec2" {
     destination = "/home/ec2-user/.ssh/jenkins-key.pem"
   }
 */
+
+ provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",
+      "sudo yum install -y yum-utils",
+      "sudo yum install -y git",
+      "sudo yum install -y unzip",
+      # Install Terraform
+      "sudo wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip",
+      "sudo unzip terraform_1.4.6_linux_amd64.zip",
+      "sudo mv terraform /usr/local/bin/",
+      # Install Terragrunt
+      "sudo wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.49.0/terragrunt_linux_amd64",
+      "sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt",
+      "sudo chmod +x /usr/local/bin/terragrunt"
+    ]
+
+ connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = tls_private_key.keypair.private_key_pem
+    host        = aws_instance.my_ec2.public_ip
+  }
+}
 root_block_device {
     volume_type           = "gp2"
     volume_size           = 500
