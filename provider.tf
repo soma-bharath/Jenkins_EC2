@@ -41,6 +41,18 @@ resource "null_resource" "setup_backup" {
 
   provisioner "remote-exec" {
     inline = [
+      "sudo yum update -y",
+      "sudo yum install -y yum-utils",
+      "sudo yum install -y git",
+      "sudo yum install -y unzip",
+      # Install Terraform
+      "sudo wget https://releases.hashicorp.com/terraform/1.4.6/terraform_1.4.6_linux_amd64.zip",
+      "sudo unzip terraform_1.4.6_linux_amd64.zip",
+      "sudo mv terraform /usr/local/bin/",
+      # Install Terragrunt
+      "sudo wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.49.0/terragrunt_linux_amd64",
+      "sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt",
+      "sudo chmod +x /usr/local/bin/terragrunt",
       "sudo mv /tmp/jenkinsbackup.sh /usr/local/bin/jenkinsbackup.sh",
       "sudo chmod +x /usr/local/bin/jenkinsbackup.sh",
       "echo '0 2 * * * /usr/local/bin/jenkinsbackup.sh' | sudo tee -a /etc/crontab > /dev/null"
